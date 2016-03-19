@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>To Do App</title>
+
+        <!-- css -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/jquery/dist/jquery.js"/>
+        <link rel="stylesheet" href="custom.css"/>
+
+        <!-- vendor scripts -->
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+        <!-- scripts -->
+        <script src="core.js"></script>
+
+    </head>
+    <body>
+    <div class="container" ng-app="toDoApp" ng-controller="MainCtrl">
+        <div class="jumbotron">
+            <h1>Personal Todo-List</h1>
+            <p>Please log in to access your To-do List.</p>
+        </div>
+        <form class="form-signin" ng-hide="user.loggedIn">
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="inputUser" class="form-control" ng-model="user.name"  placeholder="User Name" required="" autofocus="">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" ng-model="user.password"  placeholder="Password" required="">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">Sign in</button>
+        </form>
+
+        <div ng-show="user.loggedIn">
+            <div class="alert alert-success">
+                <strong>Welcome!</strong> Here is your list of TODOS.
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="checkbox" ng-repeat="todo in user.tdList">
+                        <div class="alert alert-info">
+                            <strong>{{todo}}</strong>
+                            <label>
+                                <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block logout" type="submit" ng-click="logout()">Logout</button>
+        </div>
+
+    </div>
+
+    </body>
+
+
+</html>
