@@ -36,6 +36,7 @@
                     console.log(err);
                 });
             }
+            $scope.user.formText = '';
         };
         
         $scope.login = function() {
