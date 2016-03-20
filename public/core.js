@@ -17,9 +17,28 @@
           $scope.user.loggedIn = false;
         };
 
+        $scope.deleteTodo = function(index) {
+            $http.delete('/remove/'+index).then(function(resp) {
+                $scope.user.tdList = resp.data.tdList;
+
+            },
+            function(err) {
+                console.log(err);
+            })
+        };
+
+        $scope.createTodo = function() {
+            if(typeof($scope.user.formText) !== 'undefined' && $scope.user.formText !== '') {
+                console.log($scope.user.formText);
+                $http.post('/add',{todoTxt: $scope.user.formText}).then(function(resp) {
+                    $scope.user.tdList = resp.data.tdList;
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+        };
+        
         $scope.login = function() {
-            console.log($scope.user.name);
-            console.log($scope.user.password);
 
             var data = {name: $scope.user.name, password: $scope.user.password};
             var config = {headers: {'Content-Type': 'application/json'}};
@@ -27,11 +46,13 @@
 
             function success(resp) {
                 if(resp.data.success == true) {
+                    $scope.user.failedLogin = false;
                     $scope.user.loggedIn = true;
                     displayTodos(resp.data.tdList);
                 }
-
-                console.log(resp);
+                else {
+                    loginFail();
+                }
 
             }
 
@@ -44,5 +65,10 @@
         function displayTodos(tdList) {
             $scope.user.tdList = tdList;
         }
+        
+        function loginFail() {
+            $scope.user.failedLogin = true;
+        }
+        
     }
 })();

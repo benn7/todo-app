@@ -22,31 +22,43 @@ var users = {
     allyson: {
         id: 0,
         password: 'password',
-        tdList: ['Study', 'Clean room', 'birthday party']
+        tdList: ['Study', 'Clean room', 'Attend birthday party', 'Have lunch with friends']
     },
     ben: {
         id: 1,
         password: 'password',
-        tdList: ['Create a Todo List', 'Have dinner with friends']
+        tdList: ['Create a Todo List', 'Have dinner with friends', 'brew beer', 'go to Costco']
+    },
+    jeff: {
+        id: 2,
+        password: 'password',
+        tdList: ['Review Code', 'Pick up daughter from school', 'Interview potential employees']
     }
 };
 
-
-/* dev tools*/
-// var server = http.createServer(app);
-// reload(server, app, [reloadDelay], [wait]);
-//
-// server.listen(app.get('port'), function(){
-//     console.log("Web server listening on port " + app.get('port'));
-// });
-//***************
+var curUser = null;
 
 /* API Endpoints*/
 app.post('/authenticate', authenticate);
-
+app.delete('/remove/:id',remove);
+app.post('/add',add);
 
 
 /** Function definitions**/
+
+function add(request,response) {
+    var text = request.body.todoTxt;
+    users[curUser].tdList.push(text);
+    response.json({added: true, tdList: users[curUser].tdList});
+}
+
+
+function remove(request,response) {
+    var id = request.params.id;
+    users[curUser].tdList.splice(id,1);
+    console.log(users[curUser].tdList);
+    response.json({deleted: true, tdList: users[curUser].tdList});
+}
 
 function authenticate(request,response) {
     var name = request.body.name;
@@ -57,6 +69,7 @@ function authenticate(request,response) {
     }
 
     else if(users[name] !== null && users[name].password == pass) {
+        curUser = name;
         response.json({success: true, message: 'User authenticated', tdList: users[name].tdList});
     }
     else {
