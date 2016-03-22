@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -12,61 +12,16 @@
         <!-- vendor scripts -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
 
         <!-- scripts -->
         <script src="core.js"></script>
+        <script src="httpHelper.js"></script>
+        <script src="route.js"></script>
 
     </head>
-    <body>
-    <div class="container" ng-app="toDoApp" ng-controller="MainCtrl">
-        <div class="jumbotron">
-            <h1>Personal Todo-List</h1>
-            <p>Please log in to access your To-do List.</p>
-        </div>
-        <form class="form-signin" ng-hide="user.loggedIn">
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="inputUser" class="form-control" ng-model="user.name"  placeholder="User Name" required="" autofocus="">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" ng-model="user.password"  placeholder="Password" required="">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">Sign in</button>
-        </form>
-
-        <div class="alert alert-info" ng-show="user.failedLogin">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Sorry,</strong> Please check your login credentials and try again.
-        </div>
-
-        <div ng-show="user.loggedIn">
-            <div class="alert alert-success">
-                <strong>Welcome!</strong> Here is your list of TODOS.
-            </div>
-            <div class="row" ng-repeat="todo in user.tdList">
-                <div class="col-sm-6">
-                    <div class="todos">
-                        <strong>{{todo}}</strong>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>
-                        <input type="checkbox" ng-click="deleteTodo($index)" />
-                    </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-8">
-                    <form name="addForm">
-                        <div class="form-group">
-                            <input type="text" class="form-control input-lg text-center" placeholder="I want a server with 16 cores" ng-model="user.formText">
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-4">
-                    <button class="btn-primary btn-lg" ng-click="createTodo()">Add</button>
-                </div>
-            </div>
-            <button class="btn btn-primary btn-block logout" type="submit" ng-click="logout()">Logout</button>
-        </div>
-    </div>
+    <body ng-app="toDoApp">
+    <div ng-view></div>
 
     </body>
 

@@ -1,20 +1,15 @@
 'use strict';
 
 var express = require('express')
-  , http = require('http')
-  , path = require('path')
+  , app = express()
   , bodyParser = require('body-parser')
   , logger = require('morgan');
 
-
-var app = express();
-
-app.use(express.static(__dirname + '/public'));
-
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-app.get('/',initApp);
+
 app.listen(3000);
 console.log('listening on port 3000');
 
@@ -56,7 +51,6 @@ function add(request,response) {
 function remove(request,response) {
     var id = request.params.id;
     users[curUser].tdList.splice(id,1);
-    console.log(users[curUser].tdList);
     response.json({deleted: true, tdList: users[curUser].tdList});
 }
 
@@ -77,8 +71,4 @@ function authenticate(request,response) {
     }
 
 
-}
-
-function initApp(request, response) {
-        response.sendfile('./public/index.html');
 }
