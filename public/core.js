@@ -4,22 +4,22 @@
     angular.module('toDoApp', ['ngRoute'])
       .controller('MainCtrl', mainCtrl);
 
-    mainCtrl.$inject = ['$scope', '$http', 'HttpHelper'];
-    function mainCtrl($scope, $http, HttpHelper) {
+    mainCtrl.$inject = ['$scope', '$http', 'HttpHelper','$rootScope'];
+    function mainCtrl($scope, $http, HttpHelper, $rootScope) {
         $scope.user = {
             name: '',
-            password: '',
-            loggedIn: false
+            password: ''
         };
+        
 
         $scope.logout = function() {
-            $scope.user.loggedIn = false;
+            $rootScope.loggedIn = false;
         };
 
         $scope.deleteTodo = function(index,todo) {
             console.log(todo);
             HttpHelper.remove(index).then(function(resp) {
-                $scope.user.tdList = resp.data.tdList;
+                $rootScope.tdList = resp.data.tdList;
             }, function(err) {
                 console.log(err);
             });
@@ -28,7 +28,8 @@
         $scope.createTodo = function() {
             if (typeof($scope.user.formText) !== 'undefined' && $scope.user.formText !== '') {
                 HttpHelper.create($scope.user.formText).then(function(resp) {
-                    $scope.user.tdList = resp.data.tdList;
+                    console.log(resp.data);
+                    $rootScope.tdList = resp.data.tdList;
                 }, function(err) {
                     console.log(err);
                 });
@@ -45,7 +46,7 @@
             function success(resp) {
                 if (resp.data.success == true) {
                     $scope.user.failedLogin = false;
-                    $scope.user.loggedIn = true;
+                    $rootScope.loggedIn = true;
                     displayTodos(resp.data.tdList);
                 }
                 else {
@@ -61,7 +62,7 @@
         };
 
         function displayTodos(tdList) {
-            $scope.user.tdList = tdList;
+            $rootScope.tdList = tdList;
         }
 
         function loginFail() {

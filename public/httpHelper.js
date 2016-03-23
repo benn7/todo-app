@@ -9,9 +9,14 @@
     function httpHelper($http) {
         return {
             remove: remove,
-            create: create
+            create: create,
+            getCompleted: getCompleted
         };
 
+        function getCompleted() {
+            return $http.get('/completed');
+        }
+        
         function remove(index) {
             return $http.delete('/remove/' + index);
         }

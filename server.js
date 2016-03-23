@@ -17,17 +17,20 @@ var users = {
     allyson: {
         id: 0,
         password: 'password',
-        tdList: ['Study', 'Clean room', 'Attend birthday party', 'Have lunch with friends']
+        tdList: ['Study', 'Clean room', 'Attend birthday party', 'Have lunch with friends'],
+        completed: []
     },
     ben: {
         id: 1,
         password: 'password',
-        tdList: ['Create a Todo List', 'Have dinner with friends', 'brew beer', 'go to Costco']
+        tdList: ['Create a Todo List', 'Have dinner with friends', 'brew beer', 'go to Costco'],
+        completed: []
     },
     jeff: {
         id: 2,
         password: 'password',
-        tdList: ['Review Code', 'Pick up daughter from school', 'Interview potential employees']
+        tdList: ['Review Code', 'Pick up daughter from school', 'Interview potential employees'],
+        completed: []
     }
 };
 
@@ -37,9 +40,14 @@ var curUser = null;
 app.post('/authenticate', authenticate);
 app.delete('/remove/:id',remove);
 app.post('/add',add);
+app.get('/completed',completed);
 
 
 /** Function definitions**/
+
+function completed(request, response) {
+    response.json({completedList: users[curUser].completed});
+}
 
 function add(request,response) {
     var text = request.body.todoTxt;
@@ -50,6 +58,7 @@ function add(request,response) {
 
 function remove(request,response) {
     var id = request.params.id;
+    users[curUser].completed.push(users[curUser].tdList[id]);
     users[curUser].tdList.splice(id,1);
     response.json({deleted: true, tdList: users[curUser].tdList});
 }

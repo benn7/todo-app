@@ -4,7 +4,8 @@
     angular.module('toDoApp')
       .config(function($routeProvider) {
           $routeProvider.when('/completed', {
-              templateUrl: 'completed.html'
+              templateUrl: 'completed.html',
+              controller: 'CompletedCtrl'
           })
             .when('/', {
                 templateUrl: 'welcome.html',

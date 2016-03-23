@@ -3,7 +3,7 @@
         <h1>Personal Todo-List</h1>
         <p>Please log in to access your To-do List.</p>
     </div>
-    <form class="form-signin" ng-hide="user.loggedIn">
+    <form class="form-signin" ng-hide="loggedIn">
         <label for="username" class="sr-only">Username</label>
         <input type="text" id="inputUser" class="form-control" ng-model="user.name"  placeholder="User Name" required="" autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
@@ -16,11 +16,11 @@
         <strong>Sorry,</strong> Please check your login credentials and try again.
     </div>
 
-    <div ng-show="user.loggedIn">
+    <div ng-show="loggedIn">
         <div class="alert alert-success">
             <strong>Welcome!</strong> Here is your list of TODOS.
         </div>
-        <div class="row" ng-repeat="todo in user.tdList">
+        <div class="row" ng-repeat="todo in tdList track by $index">
             <div class="col-sm-6">
                 <div class="todos">
                     <strong>{{todo}}</strong>

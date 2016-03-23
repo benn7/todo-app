@@ -1,1 +1,11 @@
-<h1>LETS GET THIS DONE!</h1>
+<h3> Completed ToDo</h3>
+<div>
+    <table class="table">
+        <tr ng-repeat="todo in completedTodos track by $index">
+            <td>{{$index}}</td>
+            <td>{{ todo }}</td>
+        </tr>
+    </table>
+    <p><a href="#/">Back to List</a></p>
+
+</div>
